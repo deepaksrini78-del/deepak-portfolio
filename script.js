@@ -1,42 +1,83 @@
-const navLinks = document.querySelectorAll(".nav-links a");
+// =========================
+// MOBILE NAVIGATION
+// =========================
 
-navLinks.forEach((link) => {
-    link.addEventListener("click", (event) => {
-        const targetId = link.getAttribute("href");
+const menuToggle = document.querySelector(".menu-toggle");
+const navLinks = document.querySelector(".nav-links");
+const navItems = document.querySelectorAll(".nav-links a");
 
-        if (targetId && targetId.startsWith("#")) {
-            event.preventDefault();
+if (menuToggle && navLinks) {
 
-            const target = document.querySelector(targetId);
+    menuToggle.addEventListener("click", () => {
 
-            if (target) {
-                target.scrollIntoView({
-                    behavior: "smooth"
-                });
-            }
-        }
+        const isOpen = navLinks.classList.toggle("active");
+
+        menuToggle.setAttribute(
+            "aria-expanded",
+            isOpen.toString()
+        );
+
+        menuToggle.setAttribute(
+            "aria-label",
+            isOpen
+                ? "Close navigation menu"
+                : "Open navigation menu"
+        );
     });
-});
 
 
-// Button animation
+    // Close menu after clicking a navigation link
+
+    navItems.forEach((item) => {
+
+        item.addEventListener("click", () => {
+
+            navLinks.classList.remove("active");
+
+            menuToggle.setAttribute(
+                "aria-expanded",
+                "false"
+            );
+
+            menuToggle.setAttribute(
+                "aria-label",
+                "Open navigation menu"
+            );
+        });
+
+    });
+}
+
+
+// =========================
+// BUTTON PRESS EFFECT
+// =========================
+
 const buttons = document.querySelectorAll(".btn");
 
 buttons.forEach((button) => {
+
     button.addEventListener("click", () => {
+
         button.style.transform = "scale(0.97)";
 
         setTimeout(() => {
             button.style.transform = "";
         }, 120);
+
     });
+
 });
 
 
-// Current year
-const footer = document.querySelector("footer p");
+// =========================
+// CURRENT YEAR
+// =========================
 
-if (footer) {
-    footer.textContent =
+const footerText = document.querySelector("footer p");
+
+if (footerText) {
+
+    footerText.textContent =
         `© ${new Date().getFullYear()} Deepak. All rights reserved.`;
 }
